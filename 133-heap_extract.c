@@ -1,36 +1,6 @@
 #include "binary_trees.h"
 
 /**
- * heapify_down - Maintains the Max Heap property by moving down the tree
- * @root: Double pointer to the root node of the heap
- */
-void heapify_down(heap_t **root)
-{
-    heap_t *current, *max_child;
-
-    current = *root;
-
-    while (current->left)
-    {
-        max_child = current->left;
-
-        if (current->right && current->right->n > current->left->n)
-            max_child = current->right;
-
-        if (max_child->n <= current->n)
-            break;
-
-        if (!max_child->left && !max_child->right)
-            break;
-
-        if (!max_child->right || max_child->left->n >= max_child->right->n)
-            swap_nodes(current, max_child, root, 1);
-        else
-            swap_nodes(current, max_child->right, root, 1);
-    }
-}
-
-/**
  * swap_nodes - Swaps two nodes in a binary tree
  * @parent: Pointer to the parent node
  * @child: Pointer to the child node
@@ -87,6 +57,36 @@ void swap_nodes(heap_t *parent, heap_t *child, heap_t **root, int free_child)
 
     if (free_child)
         free(parent);
+}
+
+/**
+ * heapify_down - Maintains the Max Heap property by moving down the tree
+ * @root: Double pointer to the root node of the heap
+ */
+void heapify_down(heap_t **root)
+{
+    heap_t *current, *max_child;
+
+    current = *root;
+
+    while (current->left)
+    {
+        max_child = current->left;
+
+        if (current->right && current->right->n > current->left->n)
+            max_child = current->right;
+
+        if (max_child->n <= current->n)
+            break;
+
+        if (!max_child->left && !max_child->right)
+            break;
+
+        if (!max_child->right || max_child->left->n >= max_child->right->n)
+            swap_nodes(current, max_child, root, 1);
+        else
+            swap_nodes(current, max_child->right, root, 1);
+    }
 }
 
 /**
